@@ -50,8 +50,8 @@ void displayStack() {
     std::cout << std::endl;
 }
 
-bool simulateChallenge(int targetValue, int timeLimit) {
-    std::cout << "You have " << timeLimit << " seconds to achieve the target value of " << targetValue << " on the stack." << std::endl;
+bool simulateChallenge(int compareValue, int timeLimit) {
+    std::cout << "You have " << timeLimit << " seconds to achieve the target value of " << compareValue << " on the stack." << std::endl;
     auto startTime = std::chrono::steady_clock::now();
    
     while (true) {
@@ -63,7 +63,7 @@ bool simulateChallenge(int targetValue, int timeLimit) {
             return false;
         }
        
-        if (!dataStack.empty() && dataStack.top() == targetValue) {
+        if (!dataStack.empty() && dataStack.top() == compareValue) {
             std::cout << "Challenge completed!" << std::endl;
             return true;
         }
@@ -75,16 +75,26 @@ bool simulateChallenge(int targetValue, int timeLimit) {
 void displayRoomDescription(const std::string& description) {
     std::cout << description << std::endl;
 }
-
-void displayChallengeInstructions(const std::string& instructions, int targetValue, int timeLimit) {
-    std::cout << "A goblin has appeared and will only grant passage if you can solve this challenge:" << std::endl;
-    std::cout << instructions << std::endl;
-    std::cout << "You have " << timeLimit << " seconds to complete this challenge." << std::endl;
+int targetValue = -1;
+//initialize the global targetValue variable. this should be named different than nonglobal 'comparevalue' etc. 
+bool compareStack(int compareValue) {
+    if(!dataStack.empty() && dataStack.top() == compareValue){
+        return true; 
+    }
+    return false; 
 }
 
 void displaySuccessMessage(const std::string& message) {
     std::cout << message << std::endl;
 }
+
+void displayChallengeInstructions(const std::string& instructions, int targetValue, int timeLimit) {
+    std::cout << "A goblin has appeared and will only grant passage if you can solve this challenge:" << std::endl;
+    std::cout << instructions << std::endl;
+    std::cout << "You have " << timeLimit << " seconds to complete this challenge." << std::endl;
+    
+}
+
 
 void displayFailureMessage(const std::string& message) {
     std::cout << message << std::endl;
@@ -106,25 +116,33 @@ void displayIntroduction() {
     std::cout << std::endl;
 }
 
+
+
 int main() {
     displayIntroduction();
 
+    
     std::cout << "Enter commands (push, pop, double, swap) or 'exit' to quit:" << std::endl;
    
     // Push initial values onto the stack
-    push(5);
-    push(7);
+    //push(5);
+    //push(7);
     displayStack();
    
     // Display the first challenge
-    displayChallengeInstructions("You have 10 seconds to achieve the target value of 7 on the stack.", 7, 10);
+
+    //maybe make another function for dynamic changes, otherwise always need to specify 'targetvalue'
+    // we can't use '7' in challenge instructions because its not a global targetvalue but an inner variable
+    // and i renamed it for clarity/seperation 
+    targetValue = 7;
+    displayChallengeInstructions("You have 10 seconds to achieve the target value of 7 on the stack.", targetValue, 10);
    
     // Start the challenge timer
-    bool challengeSuccess = simulateChallenge(7, 10);
-    if (!challengeSuccess) {
-        displayFailureMessage("Challenge failed!");
-        return 0; // Exit the game if challenge fails
-    }
+    // bool challengeSuccess = simulateChallenge(7, 10);
+    // if (!challengeSuccess) {
+    //     displayFailureMessage("Challenge failed!");
+    //     return 0; // Exit the game if challenge fails
+    // }
    
     // Player interaction loop
     std::string command;
@@ -149,6 +167,13 @@ int main() {
         }
        
         displayStack();
+        //check if the stack matches the stack demanded by the entity/enemy
+        if (compareStack(targetValue)) {
+            displaySuccessMessage("Round success!");
+            // If the round is successful, handle what happens next
+            break;
+        }
+        
     }
 
     return 0;
