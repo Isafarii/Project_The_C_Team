@@ -1,6 +1,10 @@
 #include "int_stack.hpp"
 
+<<<<<<< HEAD
 #include <cstlib>
+=======
+#include <cstdlib>
+>>>>>>> upstream/main
 
 void int_stack_init(int_stack_t* stk, int capacity) {
     stk->head = nullptr;
@@ -82,6 +86,7 @@ int int_stack_top(int_stack_t* stk, int* top_value) {
     return 1; // success
 }
 
+<<<<<<< HEAD
 int int_stack_dup(int_stack_t *stk) {
     if (stk->size < 1)
         return 0;
@@ -89,6 +94,8 @@ int int_stack_dup(int_stack_t *stk) {
     int_stack_top(stk, &top_value);
     return int_stack_push(stk, top_value); 
 }
+=======
+>>>>>>> upstream/main
 
 int int_stack_swap(int_stack_t *stk) {
     if (stk->size < 2)
@@ -130,6 +137,7 @@ int int_stack_drop(int_stack_t *stk) {
     return 1;
 }
 
+<<<<<<< HEAD
 int int_stack_two_dup(int_stack_t *stk) {
     if (stk->size < 2) 
         return 0;
@@ -139,6 +147,27 @@ int int_stack_two_dup(int_stack_t *stk) {
     return 1;
 }
 
+=======
+int int_stack_dup(int_stack_t *stk) {
+    std::cout << "Attempting to duplicate. Current stack size: " << stk->size << std::endl;
+    if (stk->size < 1) {
+        std::cout << "Error: Not enough elements to duplicate." << std::endl;
+        return 0;
+    }
+    int top_value;
+    if (int_stack_top(stk, &top_value)) {
+        std::cout << "Duplicating value: " << top_value << std::endl;
+        int result = int_stack_push(stk, top_value);
+        std::cout << "New stack size: " << stk->size << std::endl;
+        return result;
+    } else {
+        std::cout << "Error: Failed to access top element." << std::endl;
+        return 0;
+    }
+}
+
+
+>>>>>>> upstream/main
 int int_stack_two_over(int_stack_t *stk) {
     if (stk->size < 4)
         return 0;
@@ -210,9 +239,22 @@ int int_stack_div(int_stack_t *stk) {
     int top_value, next_to_top_value;
     int_stack_pop(stk, &top_value);
     int_stack_pop(stk, &next_to_top_value);
+<<<<<<< HEAD
     return int_stack_push(stk, next_to_top_value / top_value);
 }
 
+=======
+    if (top_value == 0) {
+        std::cout << "Divide by zero error." << std::endl;
+        int_stack_push(stk, next_to_top_value);  // Restore the popped value
+        int_stack_push(stk, top_value);
+        return 0;
+    }
+    return int_stack_push(stk, next_to_top_value / top_value);
+}
+
+
+>>>>>>> upstream/main
 void int_stack_print(int_stack_t* stk, std::ostream& os) {
     int_entry_t* entry = stk->head;
     int pos = 0;
@@ -234,5 +276,9 @@ int int_stack_size(int_stack_t* stk) {
 
 int int_stack_capacity(int_stack_t* stk) {
     return stk->capacity;
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> upstream/main
