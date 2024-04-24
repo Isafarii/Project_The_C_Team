@@ -12,7 +12,7 @@ The game will have UI (as far as planned) such as different themes like a dungeo
 
 ### Project Overview
 
-Our team will develop a Forth Interpreter in C++ that ‘gamifies’ the system; the game, titled “_”, will have players embark on a quest filled with enemies, challenges, and puzzles that will require skill in forth, stack knowledge, and quick-thinking efforts. 
+Our team will develop a Forth Interpreter in C++ that ‘gamifies’ the system; the game, titled “Come Forth The Dragon”, will have players embark on a quest filled with enemies, challenges, and puzzles that will require skill in forth, stack knowledge, and quick-thinking efforts. 
 Objectives
 
 Our objectives are to dive further in our understanding of Forth, utilizing it with gameplay mechanics that will allow players to have a fun and interactive experience while similarly learning about forth and the stack through gameplay and trial and error. It will furthermore be shown that programming can be enjoyable while being educational at the same time. Furthermore, it will showcase the team’s collaboration skills, coding, and communication. 
