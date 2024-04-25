@@ -1,15 +1,30 @@
+#include "int_stack.hpp"
+
+
+#include <vector> //for multiple value challenges
+#include <algorithm> //reverse
 #include <iostream>
 #include <stack>
 #include <string>
 #include <chrono>
 #include <thread>
 
+std::vector<int> targetValueVector;//new
 std::stack<int> dataStack;
 
 void push(int value) {
     dataStack.push(value);
 }
 
+// void init_prompt(const std::vector<int>& values){
+//     prompt_values = values;
+//     std:count << "Put these numbers";
+//     for (int x : values) {
+//         std:cout << value << " ";
+
+//     }
+//     std:cout << std::endl;
+// }
 int pop() {
     if (dataStack.empty()) {
         std::cerr << "Error: Stack is empty!" << std::endl;
@@ -75,13 +90,22 @@ bool simulateChallenge(int compareValue, int timeLimit) {
 void displayRoomDescription(const std::string& description) {
     std::cout << description << std::endl;
 }
-int targetValue = -1;
+//int targetValue = -1;
 //initialize the global targetValue variable. this should be named different than nonglobal 'comparevalue' etc. 
-bool compareStack(int compareValue) {
-    if(!dataStack.empty() && dataStack.top() == compareValue){
-        return true; 
+bool compareStack() {
+    //std::stack<int> targetValueVector = dataStack;
+    std::stack<int> copyStack(dataStack);
+    std::vector<int> reversedStack;
+    while(!copyStack.empty()) {
+        reversedStack.push_back(copyStack.top());
+        copyStack.pop();
     }
-    return false; 
+    std::reverse(reversedStack.begin(),reversedStack.end());
+    return reversedStack == targetValueVector;
+}
+
+void initTargetValueVector(const std::vector<int>& order){
+    targetValueVector = order;
 }
 
 void displaySuccessMessage(const std::string& message) {
@@ -121,21 +145,23 @@ void displayIntroduction() {
 int main() {
     displayIntroduction();
 
-    
     std::cout << "Enter commands (push, pop, double, swap) or 'exit' to quit:" << std::endl;
-   
+ 
     // Push initial values onto the stack
     //push(5);
     //push(7);
-    displayStack();
-   
+     targetValueVector = {7,5}; //the demanded 'stack' 
+    
+    // displayStack();
+
+
     // Display the first challenge
 
     //maybe make another function for dynamic changes, otherwise always need to specify 'targetvalue'
     // we can't use '7' in challenge instructions because its not a global targetvalue but an inner variable
     // and i renamed it for clarity/seperation 
-    targetValue = 7;
-    displayChallengeInstructions("You have 10 seconds to achieve the target value of 7 on the stack.", targetValue, 10);
+    // targetValue = 7;
+    // displayChallengeInstructions("You have 10 seconds to achieve the target value of 7 on the stack.", targetValue, 10);
    
     // Start the challenge timer
     // bool challengeSuccess = simulateChallenge(7, 10);
@@ -165,11 +191,13 @@ int main() {
         } else {
             std::cout << "Invalid command! Please enter 'push', 'pop', 'double', 'swap', or 'exit'." << std::endl;
         }
-       
+
         displayStack();
         //check if the stack matches the stack demanded by the entity/enemy
-        if (compareStack(targetValue)) {
-            displaySuccessMessage("Round success!");
+        
+        //'targetValue'
+        if (compareStack()) { 
+            displaySuccessMessage("Round success!"); 
             // If the round is successful, handle what happens next
             break;
         }

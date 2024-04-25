@@ -8,12 +8,19 @@
 
 #include <cstdlib>
 
+#include <vector> 
+
 int main() {
 int_stack_t stack;
 int_stack_init( &stack, 100); //initalize with 100
 
 std::string input;
+
+std::vector<int> prompt;//new
+
 std::cout << "Forth Interpreter. Type \"quit \" to exit.\n";
+
+
 
 while (true) {
     std::cout << ">> ";
