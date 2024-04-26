@@ -24,6 +24,28 @@ body, html {
     color: white;
 }
 
+.level1-page {
+    background-color: #8B4513; /* A brown color */
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; /* Ensuring text is visible on dark background */
+}
+
+.level2-page {
+    background-color: #D3D3D3; /* A light gray color */
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black; /* Ensuring text is visible on light background */
+}
+
 h1 {
     font-size: 3rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding text shadow for better readability */
@@ -67,4 +89,3 @@ button, .return-home {
 button:hover, .return-home:hover {
     background-color: #0056b3;
 }
-
