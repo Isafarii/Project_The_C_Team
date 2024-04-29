@@ -15,6 +15,8 @@
 
 #include <thread>
 
+#include "functions.hpp"
+
 std::vector < int > targetValueVector; //new
 std::stack < int > dataStack;
 
@@ -31,6 +33,8 @@ void push(int value) {
 //     }
 //     std:cout << std::endl;
 // }
+
+
 int pop() {
   if (dataStack.empty()) {
     std::cerr << "Error: Stack is empty!" << std::endl;
@@ -60,6 +64,23 @@ void swapTopTwo() {
   push(topValue);
   push(secondValue);
 }
+
+void pushOp(std::stack<int>& stack, const std::vector<int>& values){
+  for (int val: values){
+    stack.push(val); 
+  }
+}
+
+std::vector<Entity> initializeEntities() {
+    return {
+        {"Goblin", "Push the numbers 3 and 1 onto the stack in this order!", pushOp, {1, 3}},
+        {"Beast", "Push the number 5 onto the stack!", pushOp, {5}},
+        {"Wizard", "Push the numbers 2 and 2 onto the stack in this order!", pushOp, {2, 2}}
+    };
+}
+
+
+
 
 void displayStack() {
   std::cout << "Stack: ";
@@ -98,17 +119,17 @@ void displayRoomDescription(const std::string & description) {
 }
 //int targetValue = -1;
 //initialize the global targetValue variable. this should be named different than nonglobal 'comparevalue' etc. 
-bool compareStack() {
-  //std::stack<int> targetValueVector = dataStack;
-  std::stack < int > copyStack(dataStack);
-  std::vector < int > reversedStack;
-  while (!copyStack.empty()) {
-    reversedStack.push_back(copyStack.top());
-    copyStack.pop();
-  }
-  std::reverse(reversedStack.begin(), reversedStack.end());
-  return reversedStack == targetValueVector;
+bool compareStack(const std::vector<int>& requiredValues) {
+    std::stack<int> tempStack(dataStack); // Make a copy of the actual stack to manipulate and check
+    for (auto it = requiredValues.rbegin(); it != requiredValues.rend(); ++it) {
+        if (tempStack.empty() || tempStack.top() != *it) {
+            return false; // The stack is empty
+        }
+        tempStack.pop();
+    }
+    return tempStack.empty(); // make sure its empty
 }
+
 
 void initTargetValueVector(const std::vector < int > & order) {
   targetValueVector = order;
@@ -122,6 +143,8 @@ void displayChallengeInstructions(const std::string & instructions, int targetVa
   std::cout << "A goblin has appeared and will only grant passage if you can solve this challenge:" << std::endl;
   std::cout << instructions << std::endl;
   std::cout << "You have " << timeLimit << " seconds to complete this challenge." << std::endl;
+  std::cout << "Clear any remaining stack values first." << std::endl;
+
 
 }
 
@@ -145,21 +168,30 @@ void displayIntroduction() {
   std::cout << std::endl;
 }
 
+
+
 int main() {
+
+  bool newChallengeNeeded = true;
+  Entity currentEntity;
+
+
+  srand(time(NULL));
+  std::vector<Entity> entities = initializeEntities();
+
+
+
+
   displayIntroduction();
 
-  std::string testInstructions = "Push 5 and 7 in that order on to the stack!";
-  int testTargetValue = 7; //example target value for test
-  int testTimeLimit = 10; //example time limit
-
-  displayChallengeInstructions(testInstructions, testTargetValue, testTimeLimit);
-
+  
+  //displayChallengeInstructions(testInstructions, testTargetValue, testTimeLimit);
   std::cout << "Enter commands (push, pop, double, swap) or 'quit' to exit:" << std::endl;
 
-  targetValueVector = {
-    7,
-    5
-  }; //the demanded 'stack' 
+  // targetValueVector = {
+  //   7,
+  //   5
+  // }; //the demanded 'stack' 
 
   // Start the challenge timer
   // bool challengeSuccess = simulateChallenge(7, 10);
@@ -171,6 +203,12 @@ int main() {
   // Player interaction loop
   std::string command;
   while (true) {
+    if (newChallengeNeeded)  {
+      currentEntity = entities[rand() % entities.size()];
+      displayChallengeInstructions(currentEntity.description, currentEntity.requiredValues.back(), 10);
+      newChallengeNeeded = false;
+    }
+
     std::cout << "> ";
     std::cin >> command;
 
@@ -194,13 +232,13 @@ int main() {
     //check if the stack matches the stack demanded by the entity/enemy
 
     //'targetValue'
-    if (compareStack()) {
-      displaySuccessMessage("Round success!");
-      // If the round is successful, handle what happens next
-      break;
-    }
+
+   if (compareStack(currentEntity.requiredValues)) {
+    displaySuccessMessage("Round success!");
+    newChallengeNeeded = true; 
+   }
+  
 
   }
-
   return 0;
 }
