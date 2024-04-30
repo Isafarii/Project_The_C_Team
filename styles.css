@@ -1,0 +1,91 @@
+/* Basic CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+.homepage {
+    background-image: url('castle-background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.level1-page {
+    background-color: #8B4513; /* A brown color */
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; /* Ensuring text is visible on dark background */
+}
+
+.level2-page {
+    background-color: #D3D3D3; /* A light gray color */
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black; /* Ensuring text is visible on light background */
+}
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding text shadow for better readability */
+}
+
+button {
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input[type="number"] {
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button, .return-home {
+    font-size: 1rem;
+    padding: 8px 16px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover, .return-home:hover {
+    background-color: #0056b3;
+}
