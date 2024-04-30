@@ -75,6 +75,7 @@ std::vector<Entity> initializeEntities() {
     return {
         {"Goblin", "Push the numbers 3 and 1 onto the stack in this order!", pushOp, {1, 3}},
         {"Beast", "Push the number 5 onto the stack!", pushOp, {5}},
+        {"Brute", "Push the numbers 0 and 17 onto the stack now!", pushOp, {0, 17}},
         {"Wizard", "Push the numbers 2 and 2 onto the stack in this order!", pushOp, {2, 2}}
     };
 }
@@ -139,8 +140,8 @@ void displaySuccessMessage(const std::string & message) {
   std::cout << message << std::endl;
 }
 
-void displayChallengeInstructions(const std::string & instructions, int targetValue, int timeLimit) {
-  std::cout << "A goblin has appeared and will only grant passage if you can solve this challenge:\n" << std::endl;
+void displayChallengeInstructions(const std::string &entityName, const std::string &instructions, int targetValue, int timeLimit) {
+  std::cout << "A " << entityName << " has appeared and will only grant passage if you can solve this challenge:\n" << std::endl;
   std::cout << instructions << std::endl;
   std::cout << "You have " << timeLimit << " seconds to complete this challenge.\n" << std::endl;
   std::cout << "Clear any remaining stack values first.\n" << std::endl;
@@ -203,14 +204,15 @@ int main() {
   // Player interaction loop
   std::string command;
   while (true) {
-    if (newChallengeNeeded)  {
+    if (newChallengeNeeded) {
       currentEntity = entities[rand() % entities.size()];
-      displayChallengeInstructions(currentEntity.description, currentEntity.requiredValues.back(), 10);
+      displayChallengeInstructions(currentEntity.name, currentEntity.description, currentEntity.requiredValues.back(), 10);
       newChallengeNeeded = false;
+    
     }
 
-    std::cout << "> ";
-    std::cin >> command;
+  std::cout << "> ";
+  std::cin >> command;
 
     if (command == "push") {
       int value;
