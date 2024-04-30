@@ -140,10 +140,10 @@ void displaySuccessMessage(const std::string & message) {
 }
 
 void displayChallengeInstructions(const std::string & instructions, int targetValue, int timeLimit) {
-  std::cout << "A goblin has appeared and will only grant passage if you can solve this challenge:" << std::endl;
+  std::cout << "A goblin has appeared and will only grant passage if you can solve this challenge:\n" << std::endl;
   std::cout << instructions << std::endl;
-  std::cout << "You have " << timeLimit << " seconds to complete this challenge." << std::endl;
-  std::cout << "Clear any remaining stack values first." << std::endl;
+  std::cout << "You have " << timeLimit << " seconds to complete this challenge.\n" << std::endl;
+  std::cout << "Clear any remaining stack values first.\n" << std::endl;
 
 
 }
@@ -234,7 +234,7 @@ int main() {
     //'targetValue'
 
    if (compareStack(currentEntity.requiredValues)) {
-    displaySuccessMessage("Round success!");
+    displaySuccessMessage("\nRound success!\n");
     newChallengeNeeded = true; 
    }
   
