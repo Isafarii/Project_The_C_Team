@@ -223,6 +223,7 @@ int main() {
     } else if (command == "swap") {
       swapTopTwo();
     } else if (command == "quit") {
+      std::cout << "Quitting..." << std::endl;
       break;
     } else {
       std::cout << "Invalid command! Please enter 'push', 'pop', 'double', 'swap', or 'exit'." << std::endl;
